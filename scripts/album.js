@@ -8,12 +8,11 @@ var albumPicasso = {
          { title: 'Blue', duration: '4:26' },
          { title: 'Green', duration: '3:14' },
          { title: 'Red', duration: '5:01' },
-         { title: 'Pink', duration: '3:21'},
-         { title: 'Magenta', duration: '2:15'}
+         { title: 'Pink', duration: '3:21' },
+         { title: 'Magenta', duration: '2:15' }
      ]
  };
 
- // Another Example Album
  var albumMarconi = {
      title: 'The Telephone',
      artist: 'Guglielmo Marconi',
@@ -23,9 +22,9 @@ var albumPicasso = {
      songs: [
          { title: 'Hello, Operator?', duration: '1:01' },
          { title: 'Ring, ring, ring', duration: '5:01' },
-         { title: 'Fits in your pocket', duration: '3:21'},
+         { title: 'Fits in your pocket', duration: '3:21' },
          { title: 'Can you hear me now?', duration: '3:14' },
-         { title: 'Wrong phone number', duration: '2:15'}
+         { title: 'Wrong phone number', duration: '2:15' }
      ]
  };
 
@@ -40,15 +39,40 @@ var albumPicasso = {
 
     var $row = $(template);
 
+
     var clickHandler = function() {
-         // clickHandler logic
+      var songNumber = $(this).attr('data-song-number');
+
+      if (currentlyPlayingSong !== null) {
+
+      var currentlyPlayingCell = $('.song-item-number[data-song-number="' + currentlyPlayingSong + '"]');
+        currentlyPlayingCell.html(currentlyPlayingSong);
+      }
+      if (currentlyPlayingSong !== songNumber) {
+          $(this).html(pauseButtonTemplate);
+          currentlyPlayingSong = songNumber;
+      } else if (currentlyPlayingSong === songNumber) {
+            $(this).html(playButtonTemplate);
+            currentlyPlayingSong = null;
+          }
      };
 
-    var onHover = function(event) {
-         // Placeholder for function logic
+     var onHover = function(event) {
+         var songNumberCell = $(this).find('.song-item-number');
+         var songNumber = songNumberCell.attr('data-song-number');
+
+         if (songNumber !== currentlyPlayingSong) {
+             songNumberCell.html(playButtonTemplate);
+         }
      };
+
      var offHover = function(event) {
-         // Placeholder for function logic
+         var songNumberCell = $(this).find('.song-item-number');
+         var songNumber = songNumberCell.attr('data-song-number');
+
+         if (songNumber !== currentlyPlayingSong) {
+             songNumberCell.html(songNumber);
+         }
      };
 
     $row.find('.song-item-number').click(clickHandler);
